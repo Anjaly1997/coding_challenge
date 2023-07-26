@@ -9,13 +9,18 @@ import { Stack, Pagination } from '@mui/material';
 interface Startup {
   id: number;
   name: string;
+  employees:number;
+  totalFunding:number;
+  legalEntity:string;
+  dateFounded : number;
+  currentInvestmentStage: string;
   shortDescription: string;
 }
 
 const StartupList = () => {
   const [startups, setStartups] = useState<Startup[]>([]);
   const [page, setPage] = useState(1);
-  
+
   const startupsPerPage = 2; 
 
   const handleChange = (event: React.ChangeEvent<unknown>, value: number) => {
@@ -56,17 +61,22 @@ const StartupList = () => {
         Startup List
       </Typography>
 
-      {startupsToDisplay.length === 0 ? (
+      {
+      startupsToDisplay.length === 0 ? (
         <div>No startups found for this page.</div>
       ) : (
         startupsToDisplay.map((startup: Startup) => (
-          <Box key={startup.id} sx={{ minWidth: 275 }}>
+          <Box key={startup.id} sx={{ minWidth: 275 }} paddingBottom={2}>
             <Card variant="outlined">
               <CardContent>
                 <Typography variant="h5" component="div">
-                  {startup.name}
+                  {startup.name}. {startup.legalEntity}
                 </Typography>
-                <Typography variant="body2">
+                <Typography variant="body2" color="textSecondary">
+                {new Date(startup.dateFounded).getFullYear()} | {startup.employees} Employees | {startup.totalFunding}$ | {startup.currentInvestmentStage} 
+                </Typography>
+                <br />
+                <Typography variant="body1">
                   {startup.shortDescription}
                 </Typography>
               </CardContent>
